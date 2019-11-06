@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <TodoTitle></TodoTitle>
     <v-text-field
       :label="label"
       v-model="content"
