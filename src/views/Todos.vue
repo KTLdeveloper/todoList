@@ -1,18 +1,20 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="todos">
     <v-layout column>
       <TodoTitle></TodoTitle>
-      <v-text-field :label="label" v-model="content" outlined @keypress.enter.native="addTodo(content)">
-        <!-- <template v-slot:prepend>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <v-icon v-on="on">mdi-help-circle-outline</v-icon>
-            </template>
-            I'm a tooltip
-          </v-tooltip>
-        </template>-->
+      <v-text-field
+      background-color="white"
+      color="teal lighten-1"
+      :label="label"
+      v-model="content"
+      solo
+      @keypress.enter.native="addTodo(content)">
       </v-text-field>
       <TodoList :todoList="todoList"></TodoList>
+      <v-footer dark>
+        <v-spacer></v-spacer>
+        <div>&copy; Edited by Davis</div>
+      </v-footer>
     </v-layout>
   </v-container>
 </template>
@@ -40,4 +42,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.todos {
+  background-color: #434647;
+}
 </style>

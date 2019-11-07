@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="todoList">
     <v-banner single-line v-for="item in todoList" :key="item.text">
       {{item.text}}
       <template v-slot:actions>
@@ -28,6 +28,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.todoList {
+  height: calc(100vh - 213px);
+  overflow: auto;
+}
 .v-banner {
   &__icon {
     .v-input--selection-controls {
