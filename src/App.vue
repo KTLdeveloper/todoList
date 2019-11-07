@@ -1,23 +1,16 @@
 <template>
   <v-app>
-    <TodoTitle></TodoTitle>
-    <v-text-field
-      :label="label"
-      v-model="content"
-      solo
-    ></v-text-field>
+    <Todos></Todos>
   </v-app>
 </template>
 
 <script>
+import Todos from '@/views/Todos.vue'
 export default {
   name: 'App',
   components: {
-  },
-  data: () => ({
-    label: 'input your todo',
-    content: ''
-  }),
+    Todos
+  }
 };
 </script>
 
