@@ -10,7 +10,7 @@
       solo
       @keypress.enter.native="addTodo(content)">
       </v-text-field>
-      <TodoList :todoList="todoList"></TodoList>
+      <TodoList :todoList="renderList"></TodoList>
       <v-footer dark>
         <v-spacer></v-spacer>
         <div>&copy; Edited by Davis</div>
@@ -23,15 +23,21 @@
 export default {
   name: 'Todos',
   data: () => ({
-    label: 'input your todo',
+    label: 'Add your todo',
     content: '',
     todoList: []
   }),
+  computed: {
+    renderList () {
+      return this.todoList
+    }
+  },
   methods: {
     addTodo (val) {
       if (val.length) {
         this.todoList.push({
           isDone: false,
+          isEdit: false,
           text: val
         })
         this.content = ''
