@@ -13,7 +13,11 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <label v-show="!item.isEdit" @dblclick="editTodo(item)">{{item.text}}</label>
+          <label
+          v-show="!item.isEdit"
+          :class="{todoDone: item.isDone}"
+          @dblclick="editTodo(item)">
+          {{item.text}}</label>
           <input
           v-show="item.isEdit"
           v-focus="item.isEdit"
@@ -48,13 +52,10 @@ export default {
       this.todoList.splice(this.todoList.indexOf(item), 1)
     },
     doneEdit (item){
-			if (!this.editedTodo) {
-				return
-			}
-      this.editedTodo = null
 			if (!item.text.length) {
         this.deleteTodo(item)
       }
+      item.isEdit = false
 		},
     editTodo (item){
       item.isEdit = true
