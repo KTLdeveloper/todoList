@@ -14,21 +14,19 @@
 
         <v-list-item-content>
           <label
-          v-show="!item.isEdit"
-          :class="{todoDone: item.isDone}"
-          @dblclick="editTodo(item)">
+            :class="{ todoDone: item.isDone, editing: item == editedItem }"
+            @dblclick="editedItem = item; editedTextCache = item.text;">
           {{item.text}}</label>
           <input
-          v-show="item.isEdit"
-          v-focus="item.isEdit"
-          type="text"
-          v-model="item.text" 
-					@keyup.enter="doneEdit(item)"/>
-          <!-- <v-list-item-title v-text="item.text" :class="{todoDone: item.isDone}"></v-list-item-title> -->
+            :class="{ edit: true, editing: !editedItem}"
+            v-focus="item === editedItem"
+            type="text"
+            v-model="editedTextCache"
+            @keyup.enter.native="doneEdit(item)"/>
         </v-list-item-content>
 
         <v-list-item-avatar>
-          <v-btn text color="red lighten-1" @click="deleteTodo(item)">Delete</v-btn>
+          <v-btn text color="red lighten-1" @click="deleteItem(item)">Delete</v-btn>
         </v-list-item-avatar>
       </v-list-item>
     </v-list>
@@ -45,21 +43,23 @@ export default {
     }
   },
   data: () => ({
-    editedTodo: null
+    editedItem: null,
+    editedTextCache: null
   }),
   methods: {
-    deleteTodo (item) {
-      this.todoList.splice(this.todoList.indexOf(item), 1)
+    deleteItem (item) {
+      this.$emit('delete-item', item)
     },
     doneEdit (item){
-			if (!item.text.length) {
-        this.deleteTodo(item)
+      this.$emit('edit-item', {
+        target: item,
+        content: this.editedTextCache
+      })
+      this.editedItem = null
+      if (!this.editedTextCache.length) {
+        this.$emit('delete-item', item)
       }
-      item.isEdit = false
-		},
-    editTodo (item){
-      item.isEdit = true
-			this.beforeEditCache = item.text
+      this.editedTextCache = null
 		}
   },
   directives: {
@@ -83,9 +83,9 @@ export default {
       display: flex;
       align-items: center;
       padding: 0px !important;
-      max-width: 1100px;
+      max-width: 90%;
       font-size: 18px !important;
-      height: 25px;
+      height: 50px;
     }
   }
   .v-input {
@@ -94,6 +94,13 @@ export default {
       padding-top: 10px;
     }
   }
+}
+.edit {
+  border: 2px solid gray;
+  height: inherit;
+}
+.editing {
+  display: none;
 }
 .todoDone{
   text-decoration: line-through;

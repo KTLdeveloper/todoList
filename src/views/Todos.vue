@@ -3,14 +3,18 @@
     <v-layout column>
       <TodoTitle></TodoTitle>
       <v-text-field
-      background-color="white"
-      color="teal lighten-1"
-      :label="label"
-      v-model="content"
-      solo
-      @keypress.enter.native="addTodo(content)">
+        background-color="white"
+        color="teal lighten-1"
+        :label="label"
+        v-model="todoContent"
+        solo
+        @keypress.enter.native="addTodo">
       </v-text-field>
-      <TodoList :todoList="renderList"></TodoList>
+      <TodoList
+        :todoList="renderList"
+        @delete-item="deleteTodo"
+        @edit-item="editTodo"
+      ></TodoList>
       <v-footer dark>
         <v-spacer></v-spacer>
         <div>&copy; Edited by Davis</div>
@@ -24,7 +28,7 @@ export default {
   name: 'Todos',
   data: () => ({
     label: 'Add your todo',
-    content: '',
+    todoContent: '',
     todoList: []
   }),
   computed: {
@@ -33,15 +37,20 @@ export default {
     }
   },
   methods: {
-    addTodo (val) {
-      if (val.length) {
+    addTodo () {
+      if (this.todoContent.length) {
         this.todoList.push({
           isDone: false,
-          isEdit: false,
-          text: val
+          text: this.todoContent
         })
-        this.content = ''
+        this.todoContent = ''
       }
+    },
+    editTodo (item) {
+      this.todoList[this.todoList.indexOf(item.target)].text = item.content
+    },
+    deleteTodo (item) {
+      this.todoList.splice(this.todoList.indexOf(item), 1)
     }
   }
 };
