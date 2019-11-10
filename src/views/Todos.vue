@@ -43,14 +43,6 @@ export default {
     todoContent: '',
     todoList: []
   }),
-  watch: {
-    todoList: {
-      handler (todos) {
-        localStorage.setItem('todo', JSON.stringify(todos))
-      },
-      deep: true
-    }
-  },
   computed: {
     renderList () {
       if (this.$route.path === '/undone') {
