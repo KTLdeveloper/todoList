@@ -5,8 +5,8 @@
     dense
     >
       <v-list-item
-        v-for="item in todoList"
-        :key="item.text"
+        v-for="(item, index) in todoList"
+        :key="index"
       >
         <v-list-item-icon>
           <v-checkbox v-model="item.isDone" color="success" hide-details dense :ripple="false"></v-checkbox>
@@ -14,15 +14,15 @@
 
         <v-list-item-content>
           <label
-            :class="{ todoDone: item.isDone, editing: item == editedItem }"
+            :class="{ todoDone: item.isDone, editing: item === editedItem }"
             @dblclick="editedItem = item; editedTextCache = item.text;">
           {{item.text}}</label>
           <input
-            :class="{ edit: true, editing: !editedItem}"
+            :class="{ edit: true, editing: item !== editedItem}"
             v-focus="item === editedItem"
             type="text"
             v-model="editedTextCache"
-            @keyup.enter.native="doneEdit(item)"/>
+            @keyup.enter="doneEdit(item)"/>
         </v-list-item-content>
 
         <v-list-item-avatar>
@@ -74,7 +74,7 @@ export default {
 
 <style lang="scss" scoped>
 .todoList {
-  height: calc(100vh - 213px);
+  height: calc(100vh - 315px);
   overflow: auto;
 }
 .v-list {
@@ -94,6 +94,8 @@ export default {
       padding-top: 10px;
     }
   }
+  // border-bottom-left-radius: 0px;
+  // border-bottom-right-radius: 0px;
 }
 .edit {
   border: 2px solid gray;
