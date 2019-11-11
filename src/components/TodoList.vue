@@ -52,6 +52,13 @@
 <script>
 export default {
   name: "TodoList",
+  directives: {
+    focus: {
+      inserted (el) {
+        el.focus()
+      }
+    }
+  },
   props: {
     renderList: {
       type: Array,
@@ -64,7 +71,7 @@ export default {
   }),
   methods: {
     doneEdit (index) {
-      if (this.editedItem && this.editedItem.text !== this.editedTextCache) {
+      if (this.editedItem) {
         if (!this.editedTextCache.length) {
           this.$store.commit('todo/removeTodo', index)
         } else {
@@ -78,14 +85,7 @@ export default {
       this.editedItem = null
       this.editedTextCache = null
     }
-  },
-  directives: {
-    focus: {
-      inserted (el) {
-        el.focus()
-      }
-    }
-}
+  }
 };
 </script>
 
@@ -111,8 +111,6 @@ export default {
       padding-top: 10px;
     }
   }
-  // border-bottom-left-radius: 0px;
-  // border-bottom-right-radius: 0px;
 }
 .edit {
   border: 2px solid gray;

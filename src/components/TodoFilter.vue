@@ -1,25 +1,34 @@
 <template>
-  <div class="filter-item">
+  <div class="filter-block">
     <v-btn
       text
       color="red lighten-2"
-      @click="$router.replace('/all')">
-    All</v-btn>
+      @click="$router.replace('/all')"
+      :ripple="false"
+    >
+      All
+    </v-btn>
     <v-btn
       text
       color="red lighten-2"
-      @click="$router.replace('/undone')">
-    Undone</v-btn>
+      @click="$router.replace('/undone')"
+      :ripple="false"
+    >
+      Undone
+    </v-btn>
     <v-btn
       text
       color="red lighten-2"
-      @click="$router.replace('/done')">
-    Done</v-btn>
+      @click="$router.replace('/done')"
+      :ripple="false"
+    >
+      Done
+    </v-btn>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.filter-item {
+.filter-block {
   background-color: white;
   display: flex;
   justify-content: center;
