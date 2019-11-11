@@ -1,4 +1,5 @@
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const  LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 module.exports = {
   configureWebpack: {
@@ -9,6 +10,7 @@ module.exports = {
       }
     },
     plugins: [
+      new LodashModuleReplacementPlugin(),
       new BundleAnalyzerPlugin({
         analyzerMode: process.env.NODE_ENV === 'production' ? 'static' : 'server',
         defaultSizes: 'gzip',
