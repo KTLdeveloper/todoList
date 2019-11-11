@@ -8,7 +8,7 @@
         <v-text-field
           background-color="white"
           color="teal lighten-1"
-          :label="label"
+          label="Add your new todo"
           v-model="todoContent"
           solo
           hide-details
@@ -36,7 +36,6 @@
 export default {
   name: 'Todos',
   data: () => ({
-    label: 'Add your todo',
     todoContent: ''
   }),
   methods: {

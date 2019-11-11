@@ -5,7 +5,7 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-  name: 'all',
+  name: 'AllTodo',
   computed: {
     ...mapState({
       allTodoList: state => state.todo.todoStorage

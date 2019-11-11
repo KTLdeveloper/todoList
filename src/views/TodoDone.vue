@@ -5,7 +5,7 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  name: 'done',
+  name: 'DoneTodo',
   computed: {
     ...mapGetters({
       doneTodoList: 'todo/doneTodo' 
