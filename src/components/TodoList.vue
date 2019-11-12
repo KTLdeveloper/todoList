@@ -1,5 +1,5 @@
 <template>
-  <div class="todoList">
+  <div class="todolist">
     <v-list
       v-show="renderList.length"
       dense
@@ -22,16 +22,17 @@
 
         <v-list-item-content>
           <label
-            :class="{ todoDone: item.isDone, editing: item === editedItem }"
+            :class="{ 'todo-done': item.isDone, 'todolist-editing': item === editedItem }"
             @dblclick="editedItem = item; editedTextCache = item.text;"
           >
             {{item.text}}
           </label>
           <input
-            :class="{ edit: true, editing: item !== editedItem}"
+            :class="{ 'todolist-edit': true, 'todolist-editing': item !== editedItem}"
             v-focus="item === editedItem"
             type="text"
             v-model="editedTextCache"
+            @change="doneEdit(index)"
             @keyup.enter="doneEdit(index)"/>
         </v-list-item-content>
 
@@ -41,7 +42,7 @@
             color="red lighten-1" 
             @click="$store.commit('todo/removeTodo', index)"
           >
-            Delete
+            Remove
           </v-btn>
         </v-list-item-avatar>
       </v-list-item>
@@ -71,7 +72,7 @@ export default {
   }),
   methods: {
     doneEdit (index) {
-      if (this.editedItem) {
+      if (this.editedItem.text !== this.editedTextCache) {
         if (!this.editedTextCache.length) {
           this.$store.commit('todo/removeTodo', index)
         } else {
@@ -90,9 +91,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.todoList {
+.todolist {
   height: calc(100vh - 315px);
   overflow: auto;
+  &-edit {
+    border: 2px solid gray;
+    height: inherit;
+  }
+  &-editing {
+    display: none;
+  }
 }
 .v-list {
   &-item {
@@ -112,14 +120,7 @@ export default {
     }
   }
 }
-.edit {
-  border: 2px solid gray;
-  height: inherit;
-}
-.editing {
-  display: none;
-}
-.todoDone{
+.todo-done{
   text-decoration: line-through;
   color: gray;
 }
