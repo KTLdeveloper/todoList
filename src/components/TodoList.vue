@@ -5,8 +5,8 @@
       dense
     >
       <v-list-item
-        v-for="(item, index) in renderList"
-        :key="index"
+        v-for="item in renderList"
+        :key="item.key"
       >
         <v-list-item-icon>
           <v-checkbox
@@ -22,25 +22,26 @@
 
         <v-list-item-content>
           <label
-            :class="{ 'todo-done': item.isDone, 'todolist-editing': item === editedItem }"
-            @dblclick="editedItem = item; editedTextCache = item.text;"
+            :class="{ 'todo-done': item.isDone, 'todolist-editing': !item.isDone && item === editedItem }"
+            @dblclick="openEdit(item)"
           >
-            {{item.text}}
+            {{ item.text }}
           </label>
           <input
-            :class="{ 'todolist-edit': true, 'todolist-editing': item !== editedItem}"
+            :class="{ 'todolist-edit': true, 'todolist-editing': !item.isDone && item !== editedItem}"
+            v-show="!item.isDone"
             v-focus="item === editedItem"
             type="text"
             v-model="editedTextCache"
-            @change="doneEdit(index)"
-            @keyup.enter="doneEdit(index)"/>
+            @change="doneEdit(item)"
+            @keyup.enter="doneEdit(item)"/>
         </v-list-item-content>
 
         <v-list-item-avatar>
           <v-btn
             text 
             color="red lighten-1" 
-            @click="$store.commit('todo/removeTodo', index)"
+            @click="$store.commit('todo/removeTodo', item.key)"
           >
             Remove
           </v-btn>
@@ -71,13 +72,19 @@ export default {
     editedTextCache: null
   }),
   methods: {
-    doneEdit (index) {
-      if (this.editedItem.text !== this.editedTextCache) {
+    openEdit (item) {
+      if (!item.isDone) {
+        this.editedItem = item
+        this.editedTextCache = item.text
+      }
+    },
+    doneEdit (item) {
+      if (this.editedItem && this.editedItem.text !== this.editedTextCache) {
         if (!this.editedTextCache.length) {
-          this.$store.commit('todo/removeTodo', index)
+          this.$store.commit('todo/removeTodo', item)
         } else {
           this.$store.commit('todo/editTodo', {
-            target: index,
+            target: item.key,
             content: this.editedTextCache
           })
         }

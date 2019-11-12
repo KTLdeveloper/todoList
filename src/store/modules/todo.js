@@ -1,3 +1,5 @@
+import SparkMD5 from 'spark-md5'
+
 export const state = {
   todoStorage: []
 }
@@ -7,18 +9,27 @@ export const mutations = {
     state.todoStorage = payload
   },
   addTodo (state, payload) {
-    if (payload.length) {
+    if (payload.content.length) {
       state.todoStorage.push({
+        key: SparkMD5.hash(`${payload.content}${payload.index}`),
         isDone: false,
-        text: payload
+        text: payload.content
       })
     }
   },
   removeTodo (state, payload) {
-    state.todoStorage.splice(payload, 1)
+    let index = state.todoStorage.findIndex(item => {
+      return item.key === payload
+    })
+    state.todoStorage.splice(index, 1)
   },
   editTodo (state, payload) {
-    if (payload.content) state.todoStorage[payload.target].text = payload.content
+    if (payload.content) {
+      let index = state.todoStorage.findIndex(item => {
+        return item.key === payload.target
+      })
+      state.todoStorage[index].text = payload.content
+    }
   },
 }
 

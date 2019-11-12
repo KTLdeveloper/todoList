@@ -36,11 +36,15 @@
 export default {
   name: 'Todos',
   data: () => ({
-    todoContent: ''
+    todoContent: '',
+    todoIndex: 0
   }),
   methods: {
     addTodo () {
-      this.$store.commit('todo/addTodo', this.todoContent)
+      this.$store.commit('todo/addTodo', {
+        index: this.todoIndex++,
+        content: this.todoContent
+      })
       this.todoContent = ''
     }
   }
