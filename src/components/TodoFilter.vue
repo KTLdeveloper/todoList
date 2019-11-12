@@ -6,7 +6,7 @@
       @click="$router.replace('/all')"
       :ripple="false"
     >
-      All
+      All ({{allTodoCount}})
     </v-btn>
     <v-btn
       text
@@ -14,7 +14,7 @@
       @click="$router.replace('/undone')"
       :ripple="false"
     >
-      Undone
+      Undone ({{undoneTodoCount}})
     </v-btn>
     <v-btn
       text
@@ -22,10 +22,35 @@
       @click="$router.replace('/done')"
       :ripple="false"
     >
-      Done
+      Done ({{doneTodoCount}})
     </v-btn>
   </div>
 </template>
+
+<script>
+import { mapState, mapGetters } from 'vuex'
+export default {
+  name: 'TodoFilter',
+  computed: {
+    ...mapState({
+      allTodoList: state => state.todo.todoStorage
+    }),
+    ...mapGetters({
+      undoneTodoList: 'todo/undoneTodo',
+      doneTodoList: 'todo/doneTodo'
+    }),
+    allTodoCount () {
+      return this.allTodoList.length
+    },
+    undoneTodoCount () {
+      return this.undoneTodoList.length
+    },
+    doneTodoCount () {
+      return this.doneTodoList.length
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 .filter-block {

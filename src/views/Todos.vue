@@ -2,9 +2,9 @@
   <v-container fluid class="todos">
     <v-row>
       <v-col cols="12">
-        <TodoTitle></TodoTitle>
+        <h1 class="todos-title">TODOS</h1>
       </v-col>
-      <v-col cols="12" class="input-todo">
+      <v-col cols="12" class="todos-input">
         <v-text-field
           background-color="white"
           color="teal lighten-1"
@@ -16,10 +16,10 @@
         >
         </v-text-field>
       </v-col>
-      <v-col cols="12" class="filter">
+      <v-col cols="12" class="todos-filter">
         <TodoFilter></TodoFilter>
       </v-col>
-      <v-col cols="12" class="list">
+      <v-col cols="12" class="todos-list">
         <router-view></router-view>
       </v-col>
       <v-col cols="12">
@@ -50,21 +50,27 @@ export default {
 <style lang="scss" scoped>
 .todos {
   background-color: #424242;
-}
-.filter {
-  padding-top: 0px;
-}
-.input-todo {
-  padding-bottom: 0px;
+  &-title {
+    color: #AF2F2F;
+    display: flex;
+    justify-content: center;
+    font-size: 50px;
+  }
+  &-filter {
+    padding-top: 0px;
+  }
+  &-input {
+    padding-bottom: 0px;
+  }
+  &-list {
+    height: calc(100vh - 291px);
+    overflow: auto;
+  }
 }
 .v-text-field {
   &--solo {
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
   }
-}
-.list {
-  height: calc(100vh - 291px);
-  overflow: auto;
 }
 </style>
