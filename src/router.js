@@ -25,9 +25,9 @@ const router = new Router({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.path === '/') next({path: '/all'})
-  next()
-})
+// router.beforeEach((to, from, next) => {
+//   if (to.path === '/') next({path: '/all'})
+//   next()
+// })
 
 export default router
