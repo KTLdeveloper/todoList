@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="todos">
+  <v-container fluid class="todos" >
     <v-row>
       <v-col cols="12">
         <h1 class="todos-title">TODOS</h1>
@@ -53,6 +53,7 @@ export default {
 
 <style lang="scss" scoped>
 .todos {
+  height: 10000px;
   background-color: #424242;
   &-title {
     color: #AF2F2F;
